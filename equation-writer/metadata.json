@@ -1,0 +1,6 @@
+{
+  "name": "Equation Writer",
+  "description": "An advanced mathematical equation writer featuring a rich symbol keyboard, custom mathematical font styles, presets, and local equation management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
