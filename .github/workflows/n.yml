@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository code
+      # Step 1: Checkout the repository using the latest v4 action
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Java (required to run Android Gradle builds)
+      # Step 2: Set up Java using the latest action version
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -23,26 +23,15 @@ jobs:
           cache: gradle
 
       # Step 3: Grant execute permission to the Gradle wrapper
-      # We move into your equation-writer folder where the project lives
+      # Added an 'ls' command so we can see if the files actually exist in the logs
       - name: Grant execute permission for gradlew
         run: |
           cd equation-writer
+          ls -la
           chmod +x gradlew
 
       # Step 4: Build the debug APK
       - name: Build with Gradle
         run: |
           cd equation-writer
-          ./gradlew assembleDebug
-
-      # Step 5: Upload the finished APK so you can download it
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: equation-writer-apk
-          path: equation-writer/app/build/outputs/apk/debug/app-debug.apk
-# Change from version 20 to 22 or 24
-      - name: Set up Node.js
-        uses: actions/setup-java@v4 # (Or actions/setup-node@v4 depending on your action)
-        with:
-          node-version: '24'
+          ./gradlew assembleDebug --stacktrace
