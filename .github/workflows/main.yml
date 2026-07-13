@@ -1,2 +1,26 @@
+name: Unzip Equation Writer
 
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  unzip-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out your repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Unzip the file using the correct hyphenated name
+      - name: Unzip equation-writer
+        run: |
+          mkdir -p extracted_files
+          unzip equation-writer.zip -d extracted_files
+
+      # Step 3: Verify the files were extracted
+      - name: List extracted files
+        run: ls -la extracted_files
     
