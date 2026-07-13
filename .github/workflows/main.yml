@@ -1,9 +1,13 @@
-name: Unzip and Push to Repo
+name: Unzip Equation Writer
 
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+
+# Gives the script permission to commit files back to your repo
+permissions:
+  contents: write
 
 jobs:
   unzip-file:
@@ -13,12 +17,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # We target the file inside the equation-writer folder
+      # and extract it directly into that same folder
       - name: Unzip Equation Writer
         run: |
-          # Unzip directly into your main folder instead of a hidden one
-          unzip equation-writer.zip -d .
+          unzip equation-writer/equation-writer.zip -d equation-writer
 
-      # NEW STEP: Commit and push the new files back to the main branch
+      # Commit the newly unzipped files back to your repository
       - name: Commit and Push changes
         run: |
           git config --global user.name "github-actions[bot]"
