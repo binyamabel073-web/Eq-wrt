@@ -1,0 +1,6 @@
+- name: Extract Archive
+  uses: ihiroky/extract-action@v1
+  with:
+    file_path: equation-writer.zip
+    extract_dir: main
+    
