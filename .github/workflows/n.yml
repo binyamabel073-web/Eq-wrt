@@ -19,24 +19,26 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # NEW STEP: Install Gradle on the runner so we can generate the missing wrapper
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # FIXED STEP: We generate the missing gradlew file first, then make it executable
       - name: Generate missing Gradle Wrapper
         run: |
           cd equation-writer
           gradle wrapper
           chmod +x gradlew
 
-      # Step 4: Build the debug APK
+      # NEW STEP: Generate a temporary debug keystore for signing the APK
+      - name: Generate Debug Keystore
+        run: |
+          cd equation-writer
+          keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Android Debug"
+
       - name: Build with Gradle
         run: |
           cd equation-writer
           ./gradlew assembleDebug --stacktrace
 
-      # Step 5: Upload the finished APK so you can download it
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
