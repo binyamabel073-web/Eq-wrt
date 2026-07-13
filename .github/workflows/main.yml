@@ -1,4 +1,4 @@
-name: Unzip Equation Writer
+name: Unzip and Push to Repo
 
 on:
   push:
@@ -10,17 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out your repository code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Unzip the file using the correct hyphenated name
-      - name: Unzip equation-writer
+      - name: Unzip Equation Writer
         run: |
-          mkdir -p extracted_files
-          unzip equation-writer.zip -d extracted_files
+          # Unzip directly into your main folder instead of a hidden one
+          unzip equation-writer.zip -d .
 
-      # Step 3: Verify the files were extracted
-      - name: List extracted files
-        run: ls -la extracted_files
+      # NEW STEP: Commit and push the new files back to the main branch
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Automated unzip of equation-writer" || echo "No changes to commit"
+          git push
     
