@@ -21,7 +21,7 @@ jobs:
       # and extract it directly into that same folder
       - name: Unzip Equation Writer
         run: |
-          unzip equation-writer/equation-writer.zip -d equation-writer
+          unzip equation-writer.zip -d equation-writer
 
       # Commit the newly unzipped files back to your repository
       - name: Commit and Push changes
