@@ -45,4 +45,4 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-java@v4 # (Or actions/setup-node@v4 depending on your action)
         with:
-          node-version: '22'
+          node-version: '24'
