@@ -1,0 +1,43 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Java (required to run Android Gradle builds)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      # Step 3: Grant execute permission to the Gradle wrapper
+      # We move into your equation-writer folder where the project lives
+      - name: Grant execute permission for gradlew
+        run: |
+          cd equation-writer
+          chmod +x gradlew
+
+      # Step 4: Build the debug APK
+      - name: Build with Gradle
+        run: |
+          cd equation-writer
+          ./gradlew assembleDebug
+
+      # Step 5: Upload the finished APK so you can download it
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: equation-writer-apk
+          path: equation-writer/app/build/outputs/apk/debug/app-debug.apk
