@@ -41,3 +41,8 @@ jobs:
         with:
           name: equation-writer-apk
           path: equation-writer/app/build/outputs/apk/debug/app-debug.apk
+# Change from version 20 to 22 or 24
+      - name: Set up Node.js
+        uses: actions/setup-java@v4 # (Or actions/setup-node@v4 depending on your action)
+        with:
+          node-version: '22'
